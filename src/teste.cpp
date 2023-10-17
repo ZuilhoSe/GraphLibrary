@@ -15,5 +15,7 @@ int main(){
     g.BFS(1);
     g.heapDijkstra(1);
     g.vectorDijkstra(1);
+    int a = g.calcDistance(1,7);
+    cout << a << endl;
     return 0;
 }

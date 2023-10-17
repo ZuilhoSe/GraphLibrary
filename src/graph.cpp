@@ -144,6 +144,11 @@ void Graph::DFS(int v){
 }
 
 std::vector<float> Graph::heapDijkstra(int v){
+    if(this->hasNegativeWeight){
+        cout << "Grafo possui arestas com peso negativo. Nao e possivel calcular a distancia." << endl;
+        return std::vector<float>();
+    }
+    
     v = v - 1;
     int nV = this->getNVertices();
     std::vector<float> distance(nV, INF);
@@ -182,6 +187,10 @@ std::vector<float> Graph::heapDijkstra(int v){
 }
 
 std::vector<float> Graph::vectorDijkstra(int v){
+    if(this->hasNegativeWeight){
+        cout << "Grafo possui arestas com peso negativo. Nao e possivel calcular a distancia." << endl;
+        return std::vector<float>();
+    }
     v = v - 1;
     int numVertices = this->getNVertices();
     std::vector<float> distance(numVertices, INF);
@@ -253,6 +262,11 @@ int Graph::getNEdges(){
     return nEdges;
 }
 
+int Graph::calcDistance(int v1, int v2){
+    std::vector<float> distances = this->vectorDijkstra(v1);
+    return distances[v2-1];
+}
+
 
 void adjListGraph::createGraph(ifstream &fin){
     cout << "Criando grafo..." << endl;
@@ -279,6 +293,7 @@ void adjListGraph::createGraph(ifstream &fin){
         }
         counter++;
     }
+    cout << "Grafo criado!" << endl;
 }
 
 void adjListGraph::addEdgeAdjList(int v1, int v2, float weight){

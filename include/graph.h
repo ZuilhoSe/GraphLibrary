@@ -27,6 +27,7 @@ typedef class Graph{
         void DFS(int v);
         std::vector<float> heapDijkstra(int v);
         std::vector<float> vectorDijkstra(int v);
+        int calcDistance(int v1, int v2);
 
         virtual std::vector<struct Edge> *getList(){};
 
