@@ -11,11 +11,12 @@ using namespace std;
 int main(){
     adjListGraph g("../examples/graph_teste.txt");
     g.printList();
-    std::vector<float> neighbors = g.returnNeighbors(1);
-    g.BFS(1);
     g.heapDijkstra(1);
-    g.vectorDijkstra(1);
-    int a = g.calcDistance(1,7);
-    cout << a << endl;
+
+    for(int i = 0; i < g.nodesFather.size(); i++){
+        cout << "Vertice: " << i+1 << " | Pai: " << g.nodesFather[i] << " | Grau: " << g.nodesDegree[i] << " | Level: " << g.nodesLevel[i] <<endl;
+    }
+
+
     return 0;
 }

@@ -3,8 +3,6 @@
 #include <vector>
 
 typedef class Graph{
-    private:
-
     public:
         int nVertices;
         int nEdges = 0;
@@ -18,24 +16,23 @@ typedef class Graph{
 
         // Graph functions
         bool createGraphFromTxt(std::string sFilename);
-        virtual void createGraph(std::ifstream &fin){};
         int getNVertices();
         int getNEdges();
-        
-        virtual std::vector<float> returnNeighbors(int v){};
+        int calcDistance(int v1, int v2);
         void BFS(int v);
         void DFS(int v);
+        void exportGenTreeToTxt(std::string sFilename);
         std::vector<float> heapDijkstra(int v);
         std::vector<float> vectorDijkstra(int v);
-        int calcDistance(int v1, int v2);
 
+        virtual void createGraph(std::ifstream &fin){};
         virtual std::vector<struct Edge> *getList(){};
+        virtual std::vector<float> returnNeighbors(int v){};
 
         std::vector<int> *CC;
         std::vector<int> nodesFather;
         std::vector<int> nodesDegree;
         std::vector<int> nodesLevel;
-
 } Graph;
 
 typedef struct Edge{
@@ -51,7 +48,10 @@ typedef class adjListGraph: public Graph{
         adjListGraph(std::string sFilename):Graph(){
             this->createGraphFromTxt(sFilename);
         };
-        void addEdgeAdjList(int v1, int v2, float weight);
+        ~adjListGraph(){
+            delete this->List;
+        };
+        void addEdge(int v1, int v2, float weight);
         void createGraph(std::ifstream &fin) override;
         std::vector<struct Edge> *getList() override;
         void printList();

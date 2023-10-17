@@ -148,14 +148,21 @@ std::vector<float> Graph::heapDijkstra(int v){
         cout << "Grafo possui arestas com peso negativo. Nao e possivel calcular a distancia." << endl;
         return std::vector<float>();
     }
-    
+
     v = v - 1;
     int nV = this->getNVertices();
     std::vector<float> distance(nV, INF);
     std::vector<struct Edge>* L = this->getList();
     std::priority_queue<std::pair<float, int>, std::vector<std::pair<float, int>>, std::greater<std::pair<float, int>>> pq;
 
+    std::vector<int> degree(nVertices, 0);
+    std::vector<int> father(nVertices, -1);
+    std::vector<int> level(nVertices, -1);
+
     distance[v] = 0.0f;
+    father[v] = 0;
+    level[v] = 0;
+    degree[v] = 0;
     pq.push({distance[v], v});
 
     while (!pq.empty()) {
@@ -170,9 +177,12 @@ std::vector<float> Graph::heapDijkstra(int v){
         for (const Edge &edge : L[u]) {
             int v = edge.dest;
             float w = edge.weight;
+            degree[u]++;
 
             if (distance[u] + w < distance[v]) {
                 distance[v] = distance[u] + w;
+                father[v] = u + 1;
+                level[v] = level[u] + 1;
                 pq.push({distance[v], v});
             }
         }
@@ -182,6 +192,12 @@ std::vector<float> Graph::heapDijkstra(int v){
     for (int i = 0; i < nV; i++) {
         cout << "Vertice: " << i+1 << " | Distancia: " << distance[i] << endl;
     }
+
+    this->nodesDegree = degree;
+    this->nodesFather = father;
+    this->nodesLevel = level;
+
+    exportGenTreeToTxt("../examples/graph_teste_out.txt");
 
     return distance;
 }
@@ -195,9 +211,17 @@ std::vector<float> Graph::vectorDijkstra(int v){
     int numVertices = this->getNVertices();
     std::vector<float> distance(numVertices, INF);
     std::vector<struct Edge>* L = this->getList();
-    distance[v] = 0.0f;
+
+    std::vector<int> degree(nVertices, 0);
+    std::vector<int> father(nVertices, -1);
+    std::vector<int> level(nVertices, -1);
 
     std::vector<bool> visited(numVertices, false);
+
+    distance[v] = 0.0f;
+    father[v] = 0;
+    level[v] = 0;
+    degree[v] = 0;
 
     for (int i = 0; i < numVertices; i++) {
         // Find the unvisited vertex with the smallest distance
@@ -216,8 +240,12 @@ std::vector<float> Graph::vectorDijkstra(int v){
             int neighbor = edge.dest;
             float weight = edge.weight;
 
+            degree[minVertex]++;
+
             if (!visited[neighbor] && distance[minVertex] + weight < distance[neighbor]) {
                 distance[neighbor] = distance[minVertex] + weight;
+                father[neighbor] = minVertex + 1;
+                level[neighbor] = level[minVertex] + 1;
             }
         }
     }
@@ -226,6 +254,12 @@ std::vector<float> Graph::vectorDijkstra(int v){
     for (int i = 0; i < numVertices; i++) {
         cout << "Vertex: " << i + 1 << " | Distance: " << distance[i] << endl;
     }
+
+    this->nodesDegree = degree;
+    this->nodesFather = father;
+    this->nodesLevel = level;
+
+    exportGenTreeToTxt("../examples/graph_teste_out.txt");
 
     return distance;
 }
@@ -289,14 +323,14 @@ void adjListGraph::createGraph(ifstream &fin){
                 this->hasNegativeWeight = true;
             }
             nEdges++;
-            addEdgeAdjList(v1-1, v2-1, w);
+            addEdge(v1-1, v2-1, w);
         }
         counter++;
     }
     cout << "Grafo criado!" << endl;
 }
 
-void adjListGraph::addEdgeAdjList(int v1, int v2, float weight){
+void adjListGraph::addEdge(int v1, int v2, float weight){
     Edge e1;
     e1.dest = v2;
     e1.weight = weight;
@@ -334,4 +368,20 @@ void adjListGraph::printList(){
 
 std::vector<struct Edge>* adjListGraph::getList(){
     return List;
+}
+
+void Graph::exportGenTreeToTxt(string sFilename){
+    ofstream fout(sFilename);
+
+    if (!fout){
+        cout<<endl;
+        cout << "Erro ao abrir o arquivo." << endl;
+        return;
+    }
+
+    for(int i = 0; i < nVertices; i++){
+        fout << "Vertice: " << i+1 << " | Pai: " << nodesFather[i] << " | Level: " << nodesLevel[i] << " | Grau:" << nodesDegree[i] <<endl;
+    }
+
+    fout.close();
 }
