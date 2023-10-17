@@ -14,6 +14,7 @@ typedef class Graph{
         int medianDegree = -1;
         int diameter = -1;
         int nConnectedComponents = 0;
+        bool hasNegativeWeight = false;
 
         // Graph functions
         bool createGraphFromTxt(std::string sFilename);

@@ -271,6 +271,9 @@ void adjListGraph::createGraph(ifstream &fin){
             v2 = token;
         }else{
             w = token;
+            if(w<0){
+                this->hasNegativeWeight = true;
+            }
             nEdges++;
             addEdgeAdjList(v1-1, v2-1, w);
         }
