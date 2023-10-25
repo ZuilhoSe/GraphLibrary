@@ -1,0 +1,5 @@
+Distancia de Dijkstra para Turing: 3.40282e+038
+Distancia de Dijkstra para Kruskal: 4.21798
+Distancia de Dijkstra para Kleinberg: 2.81198
+Distancia de Dijkstra para Tardos: 2.88254
+Distancia de Dijkstra para Ratton: 3.48508

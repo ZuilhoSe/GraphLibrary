@@ -283,8 +283,8 @@ int Graph::getNEdges(){
     return nEdges;
 }
 
-int Graph::calcDistance(int v1, int v2){
-    std::vector<float> distances = this->vectorDijkstra(v1);
+float Graph::calcDistance(int v1, int v2){
+    std::vector<float> distances = this->heapDijkstra(v1);
     return distances[v2-1];
 }
 
@@ -382,6 +382,10 @@ std::vector<int> Graph::getPath(int v1, int v2){
     int v = v2 - 1;
 
     while(v != v1 - 1){
+        if (v == -2){
+            cout << "Nao existe caminho entre os vertices " << v1 << " e " << v2 << endl;
+            return std::vector<int>();
+        }
         path.push_back(v + 1);
         v = nodesFather[v] - 1;
     }
