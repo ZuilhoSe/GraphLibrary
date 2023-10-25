@@ -22,8 +22,11 @@ typedef class Graph{
         void BFS(int v);
         void DFS(int v);
         void exportGenTreeToTxt(std::string sFilename);
-        std::vector<float> heapDijkstra(int v);
+        void exportDistancesToTxt(std::string sFilename, std::vector<float> distances);
+        void exportMinPathToTxt(std::string sFilename, int v1, int v2);
+        std::vector<float> heapDijkstra(int v, bool e = false, std::string sFilename = "", std::string sFilename2 = "");
         std::vector<float> vectorDijkstra(int v);
+        std::vector<int> getPath(int v1, int v2);
 
         virtual void createGraph(std::ifstream &fin){};
         virtual std::vector<struct Edge> *getList(){};

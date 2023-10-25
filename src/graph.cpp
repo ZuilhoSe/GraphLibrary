@@ -16,20 +16,6 @@ using namespace std;
 /**
  * Aux functions
  */
-bool readNextToken(int& token, ifstream& fin){
-    char nextChar;
-    fin >> nextChar;
-
-    fin.unget(); 
-    fin >> token;
-
-    if(fin.fail()){
-        return false;
-    }
-
-    return true;
-}
-
 bool comparePair(const pair<int, int>& a, const pair<int, int>& b) {
     return a.first < b.first;
 }
@@ -76,8 +62,6 @@ void Graph::BFS(int v){
     while (!q.empty()) {
         int f = q.front();
         q.pop();
-
-        cout << "Vertice: " << f+1 << endl;
 
         for (int w : returnNeighbors(f)) {  // Assuming adjacencyList is a vector<vector<int>>
             if (!visited[w]) {
@@ -143,7 +127,7 @@ void Graph::DFS(int v){
     //}
 }
 
-std::vector<float> Graph::heapDijkstra(int v){
+std::vector<float> Graph::heapDijkstra(int v, bool e, std::string sFilename, std::string sFilename2){
     if(this->hasNegativeWeight){
         cout << "Grafo possui arestas com peso negativo. Nao e possivel calcular a distancia." << endl;
         return std::vector<float>();
@@ -189,16 +173,19 @@ std::vector<float> Graph::heapDijkstra(int v){
     }
 
     // Print the shortest distances from the source vertex to all vertices
-    for (int i = 0; i < nV; i++) {
-        cout << "Vertice: " << i+1 << " | Distancia: " << distance[i] << endl;
-    }
+    //for (int i = 0; i < nV; i++) {
+    //    cout << "Vertice: " << i+1 << " | Distancia: " << distance[i] << endl;
+    //}
 
     this->nodesDegree = degree;
     this->nodesFather = father;
     this->nodesLevel = level;
 
-    exportGenTreeToTxt("../examples/graph_teste_out.txt");
-
+    if(e){
+        exportGenTreeToTxt(sFilename);
+        exportDistancesToTxt(sFilename2, distance);
+    }
+    
     return distance;
 }
 
@@ -251,9 +238,9 @@ std::vector<float> Graph::vectorDijkstra(int v){
     }
 
     // Print the shortest distances from the source vertex to all vertices
-    for (int i = 0; i < numVertices; i++) {
-        cout << "Vertex: " << i + 1 << " | Distance: " << distance[i] << endl;
-    }
+    //for (int i = 0; i < numVertices; i++) {
+    //    cout << "Vertex: " << i + 1 << " | Distance: " << distance[i] << endl;
+    //}
 
     this->nodesDegree = degree;
     this->nodesFather = father;
@@ -306,27 +293,19 @@ void adjListGraph::createGraph(ifstream &fin){
     cout << "Criando grafo..." << endl;
     List = new vector<struct Edge>[nVertices];
 
-    int token;
-    int counter = 0;
     int v1;
     int v2;
-    int w;
+    double w;
+    int nE = 0;
 
-    while (readNextToken(token, fin)){
-        if(counter%3 == 0){
-            v1 = token;
-        }else if (counter%3 == 1){
-            v2 = token;
-        }else{
-            w = token;
-            if(w<0){
-                this->hasNegativeWeight = true;
-            }
-            nEdges++;
-            addEdge(v1-1, v2-1, w);
-        }
-        counter++;
+    while (fin.peek() != EOF){
+        fin >> v1 >> v2 >> w;
+        addEdge(v1-1, v2-1, w);
+        nE++;
     }
+
+    this->nEdges = nE;
+
     cout << "Grafo criado!" << endl;
 }
 
@@ -384,4 +363,47 @@ void Graph::exportGenTreeToTxt(string sFilename){
     }
 
     fout.close();
+}
+
+void Graph::exportDistancesToTxt(string sFilename, vector<float> distances){
+    cout << "Exportando distancias para o arquivo..." << endl;
+    ofstream fout(sFilename);
+
+    for (int i = 0; i < distances.size(); i++){
+        fout << "Vertice: " << i+1 << " | Distancia: " << distances[i] << endl;
+    }
+    cout << "Distancias exportadas!" << endl;
+
+    fout.close();
+}
+
+std::vector<int> Graph::getPath(int v1, int v2){
+    std::vector<int> path;
+    int v = v2 - 1;
+
+    while(v != v1 - 1){
+        path.push_back(v + 1);
+        v = nodesFather[v] - 1;
+    }
+
+    path.push_back(v1);
+
+    return path;
+}
+
+void Graph::exportMinPathToTxt(string sFilename, int v1, int v2){
+    cout << "Exportando caminho minimo para o arquivo..." << endl;
+    ofstream fout(sFilename, std::ios::app);
+
+    std::vector<int> p = getPath(v1, v2);
+
+    fout << "Caminho minimo de " << v1 << " ate " << v2 << ": ";
+
+    for(int i = 0; i < p.size(); i++){
+        fout << p[i] << " ";
+    }
+
+    fout << endl;
+
+    cout << "Caminho minimo exportado!" << endl;
 }

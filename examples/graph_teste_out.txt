@@ -1,7 +1,0 @@
-Vertice: 1 | Pai: 0 | Level: 0 | Grau:3
-Vertice: 2 | Pai: 1 | Level: 1 | Grau:3
-Vertice: 3 | Pai: 4 | Level: 3 | Grau:3
-Vertice: 4 | Pai: 2 | Level: 2 | Grau:5
-Vertice: 5 | Pai: 1 | Level: 1 | Grau:3
-Vertice: 6 | Pai: 5 | Level: 2 | Grau:3
-Vertice: 7 | Pai: 3 | Level: 4 | Grau:2
