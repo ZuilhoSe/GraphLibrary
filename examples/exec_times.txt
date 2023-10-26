@@ -1,2 +1,17 @@
 Mean Execution Time Heap Dijkstra 1: 107 milliseconds
 Mean Execution Time Heap Dijkstra 1: 81 milliseconds
+
+
+Mean Execution Time Heap Dijkstra 1: 36 milliseconds
+Mean Execution Time Heap Dijkstra 2: 124 milliseconds
+Mean Execution Time Heap Dijkstra 2: 123 milliseconds
+Mean Execution Time Heap Dijkstra 3: 734 milliseconds
+Mean Execution Time Heap Dijkstra 3: 729 milliseconds
+Mean Execution Time Heap Dijkstra 4: 9657 milliseconds
+Mean Execution Time Heap Dijkstra 5: 53609 milliseconds
+
+Mean Execution Time Vector Dijkstra 1: 2046 milliseconds
+Mean Execution Time Vector Dijkstra 1: 2040 milliseconds
+Mean Execution Time Vector Dijkstra 2: 12705 milliseconds
+Mean Execution Time Vector Dijkstra 2: 12717 milliseconds
+Mean Execution Time Vector Dijkstra 3: 202831 milliseconds
