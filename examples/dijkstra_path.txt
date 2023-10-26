@@ -1,0 +1,5 @@
+Não há caminho entre os pesquisadores! (Alan Turing - Dijkstra)
+J. B. Kruskal | Albert G. Greenberg | Richard E. Ladner | Amotz Bar-Noy | Baruch Schieber | Yishay Mansour | David A. McAllester | Robert Givan | Edwin K. P. Chong | Howard Jay Siegel | Dan C. Marinescu | John R. Rice | Edsger W. Dijkstra | 
+Jon M. Kleinberg | Prabhakar Raghavan | Eli Upfal | Franco P. Preparata | Roberto Tamassia | Michael T. Goodrich | Mikhail J. Atallah | John R. Rice | Edsger W. Dijkstra | 
+Éva Tardos | Zvi Galil | David Eppstein | Michael T. Goodrich | Mikhail J. Atallah | John R. Rice | Edsger W. Dijkstra | 
+Daniel R. Figueiredo | Donald F. Towsley | John A. Stankovic | Krithi Ramamritham | Wei Zhao | Edwin K. P. Chong | Howard Jay Siegel | Dan C. Marinescu | John R. Rice | Edsger W. Dijkstra | 

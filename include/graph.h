@@ -18,7 +18,7 @@ typedef class Graph{
         bool createGraphFromTxt(std::string sFilename);
         int getNVertices();
         int getNEdges();
-        int calcDistance(int v1, int v2);
+        float calcDistance(int v1, int v2);
         void BFS(int v);
         void DFS(int v);
         void exportGenTreeToTxt(std::string sFilename);
