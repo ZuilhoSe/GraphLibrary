@@ -9,8 +9,8 @@
 using namespace std;
 
 int main(){
-    int nExecutions = 1;
-    adjListGraph g("C:/Users/segun/Documents/GitHub/GraphLibrary/data/grafo_W_1.txt");
+    int nExecutions = 2;
+    adjListGraph g("C:/Users/carol/OneDrive/Documentos/GitHub/GraphLibrary/grafos/grafo_W_4.txt");
     vector<long long> executionTimes;
 
     std::random_device rd;
@@ -21,9 +21,9 @@ int main(){
         int randomNum = distribution(mt);
         
         auto start_time = std::chrono::high_resolution_clock::now();
-        //function being timed...
-        //g.vectorDijkstra(randomNum);
-        g.heapDijkstra(randomNum);
+        // function being timed...
+        g.vectorDijkstra(randomNum);
+        // g.heapDijkstra(randomNum);
         auto end_time = std::chrono::high_resolution_clock::now();
         
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
@@ -40,7 +40,7 @@ int main(){
 
     cout << "Mean Execution Time: " << meanExecutionTime << " milliseconds" << endl;
     
-    ofstream fout("../examples/exec_times.txt", std::ios::app);
+    ofstream fout("C:/Users/carol/OneDrive/Documentos/GitHub/GraphLibrary/examples/exec_times.txt", std::ios::app);
 
     if (!fout){
         cout<<endl;
@@ -48,7 +48,7 @@ int main(){
         return 0;
     }
 
-    fout << "Mean Execution Time Heap Dijkstra 1: " << meanExecutionTime << " milliseconds" << endl;
+    fout << "Mean Execution Time Vector Dijkstra 4: " << meanExecutionTime << " milliseconds" << endl;
 
     return 0;
 }
